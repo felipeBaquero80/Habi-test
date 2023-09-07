@@ -1,19 +1,43 @@
 from connect_db import connect_db
 import json
 
-class Filter_manage():
 
-    def json_parser(self, tuple_search):
+def json_parser(tuple_search):
+    """
+    Convert a tuple of database search results into JSON format.
 
-        result_dict = [{"Direccion": row[0],'Ciudad':row[1],'Estado':row[2],'Precio':row[3],'Descripcion':row[4] } for row in tuple_search]
-        result_json = json.dumps(result_dict)
-        return result_json
+    Args:
+        tuple_search (tuple): A tuple containing database search results.
 
+    Returns:
+        str: JSON representation of the search results.
+    """
+    result_dict = [
+        {"Direccion": row[0], 'Ciudad': row[1], 'Estado': row[2], 'Precio': row[3], 'Descripcion': row[4]} for row
+        in tuple_search]
+    result_json = json.dumps(result_dict)
+    return result_json
+
+
+class Filter_manage:
+    """
+    A class for managing property filters and database queries.
+    """
 
     def consult_db(self, filter_city, filter_address, filter_year):
 
+        """
+        Execute a database query based on provided filters.
 
-        print(filter_city, filter_address, filter_year)
+        Args:
+            filter_city (str): The city filter.
+            filter_address (str): The address filter.
+            filter_year (str): The year filter.
+
+        Returns:
+            str: JSON representation of the query results.
+        """
+
         string_consulta = """SELECT p.address, p.city,
                                 s.name, p.price, p.description FROM status As s
                                 INNER JOIN status_history AS sh ON s.id = sh.property_id
@@ -22,7 +46,7 @@ class Filter_manage():
                                 SELECT MAX(update_date)
                                 FROM status_history
                                 WHERE property_id = p.id)"""
-        
+
         conditions = []
 
         if filter_city:
@@ -38,10 +62,6 @@ class Filter_manage():
 
         string_consulta += "ORDER BY p.id, sh.update_date DESC;"
 
-        print(string_consulta)
-
-        
-
         # get conn and cursor from connect_db
         conn, cursor = connect_db()
 
@@ -49,11 +69,9 @@ class Filter_manage():
             cursor.execute(string_consulta)
             result = cursor.fetchall()
 
-            
-
-            return (self.json_parser(result))
-
+            print('Cerrando conexiones...')
             cursor.close()
             conn.close()
+            print('Conexion cerrada')
 
-
+            return json_parser(result)

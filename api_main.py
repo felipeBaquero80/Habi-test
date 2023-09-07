@@ -1,11 +1,17 @@
 import http.server
 import socketserver
-import urllib.parse
-from filters import Filter_manage as filtros
+from filters import Filter_manage as Filtros
 import json
+
 
 class ManageApi(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
+        """
+        Handle incoming GET requests.
+
+        Returns:
+            str: A personalized greeting message.
+        """
         if self.path == '/':
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
@@ -18,6 +24,12 @@ class ManageApi(http.server.BaseHTTPRequestHandler):
             self.wfile.write(b'Ruta no encontrada.')
 
     def do_POST(self):
+        """
+        Handle incoming POST requests.
+
+        Returns:
+            str: A response based on the request.
+        """
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length).decode('utf-8')
 
@@ -29,9 +41,8 @@ class ManageApi(http.server.BaseHTTPRequestHandler):
             filter_address = parametros.get('filter_address', '')
             filter_year = parametros.get('filter_year', '')
 
-
             if self.path == '/filtros':
-                result = filtros().consult_db(filter_city, filter_address, filter_year)
+                result = Filtros().consult_db(filter_city, filter_address, filter_year)
                 self.send_response_method(result)
 
             else:
@@ -45,10 +56,17 @@ class ManageApi(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b'Solicitud JSON invalida.')
 
+    def send_response_method(self, result):
+        """
+        Send an HTTP response based on the result.
 
+        Args:
+            result (Json): The response data.
 
-    def send_response_method(self,result):
-        print(len(result), result)
+        Returns:
+            str: An HTTP response with the given result.
+        """
+        print(result)
         if len(result) == 2:
             self.send_response(204)
         else:
@@ -56,7 +74,6 @@ class ManageApi(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
         self.wfile.write(result.encode('utf-8'))
-
 
 
 # port config

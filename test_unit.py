@@ -1,31 +1,49 @@
 from connect_db import connect_db
-from filters import Filter_manage
+from filters import Filter_manage, json_parser
 import json
 
 
 
 def test_conexion_db():
+    """
+    Test the database connection.
+
+    Checks if the database connection and cursor are valid.
+    """
     conn, cursor = connect_db()
     assert conn is not None, "Connection should be successful"
     assert cursor is not None, "The cursor should be valid"
     print("Successful database connection test")
 
 class TestFilterManage:
-
+    """
+    Test cases for the FilterManage class.
+    """
     def test_json_parser(self):
+        """
+        Test the JSON parsing function.
 
-        tuple_search = [('123 Main St', 'New York', 'NY', 100000, 'Lorem ipsum')]
-        expected_result = '[{"Direccion": "123 Main St", "Ciudad": "New York", "Estado": "NY", "Precio": 100000, "Descripcion": "Lorem ipsum"}]'
+        Compares the result of json_parser with an expected JSON string.
+        """
+
+        tuple_search = [
+            ('carrera 100 #15-90', 'medellin', 'vendido', 325000000, 'Amplio apartamento en conjunto cerrado')]
+        expected_result = '[{"Direccion": "carrera 100 #15-90", "Ciudad": "medellin", "Estado": "vendido", "Precio": 325000000, "Descripcion": "Amplio apartamento en conjunto cerrado"}]'
 
 
         filter_manager = Filter_manage()
 
 
-        result = filter_manager.json_parser(tuple_search)
+        result = json_parser(tuple_search)
 
-        assert result == expected_result
+        assert result == expected_result, "La consulta es exitosa"
 
     def test_consult_db(self):
+        """
+        Test the consult_db function.
+
+        Calls consult_db with filters and checks if the result is a valid JSON.
+        """
 
         filter_manager = Filter_manage()
 
@@ -51,11 +69,11 @@ class TestFilterManage:
     test_filter_manager = TestFilterManage()
     test_filter_manager.test_json_parser()
     test_filter_manager.test_consult_db()
-"""
+
 
 
 
 
 
 if __name__ == '__main__':
-    test_conexion_db()
+    test_conexion_db()"""
