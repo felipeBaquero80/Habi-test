@@ -13,6 +13,7 @@ En este programa se resolverá la prueba para backend developer de Habi a cargo 
 - [Instrucciones para crear el modelo](#instrucciones-para-crear-el-modelo)
 - [Sugerencias para mejorar el modelo](#sugerencias-para-mejorar-el-modelo)
 - [Pruebas Unitarias](#pruebas-unitarias)
+- [Json para enviar filtros](#json-para-enviar-filtros)
 
 
 
@@ -29,7 +30,7 @@ Para instalar el proyecto, sigue estos pasos:
    1. las variables de entorno deben tener los datos de la cadena de conexion.
 7. Una vez tengas configurado las variables de entorno ejecuta el comando `python api_main.py`
    1. lo que provocara que los servicios ya esten en tu **localhost** puerto **8080**
-   2. si deseas modificar el puerto se encuntra en el archivo [api_main.py](api_main.py) variable **port**
+   2. si deseas modificar el puerto se encuentra en el archivo [api_main.py](api_main.py) variable **port**
 
 
 ## Tecnologías
@@ -47,14 +48,14 @@ Para instalar el proyecto, sigue estos pasos:
 3. Que conector usar para la base de datos
    1. **MySql Connector** dado que es el oficial y tiene soporte completo con bases de datos **MySql**, lo que nos permite tener una documentación clara en caso de que surja cualquier duda.
 4. Como hacer la consulta a la bd dinámica para que no consuma tantos recursos y a su vez sea funcional para el primer requerimiento
-   1. relaizar una serie de join para optimizar el consumo de la base de datos y a su vez hacer concatenación de strigns para realizar filtros dinámicos según los requerimientos del proyecto.
+   1. Realizar una serie de join para optimizar el consumo de la base de datos y a su vez hacer concatenación de strings para realizar filtros dinámicos según los requerimientos del proyecto.
 
 ## Modelo like :+1:
 ![Esquema](diagrama_megustas.png)
 [fig1](##esquema)
 
 
--En este modelo entidad relación lo que representamos es la forma de soportar el sistema de like propuesto, pensando en tener una referencia del usuario que le da like a la propiedad, este modelo consta cinco campos, dos de ellos llaves foráneas referentes a la propiedad y al usuario(property_id,user_id), uno para saber la fecha que se le dio like y otro para saber si el like sigue activo.
+-En este modelo entidad relación lo que representamos es la forma de soportar el sistema de like propuesto, pensando en tener una referencia del usuario que le da like a la propiedad, este modelo consta de cinco campos, dos de ellos llaves foráneas referentes a la propiedad y al usuario(property_id,user_id), uno para saber la fecha que se le dio like y otro para saber si el like sigue activo.
 - Permitir que solo los usuarios registrados puedan dar like, ya que si no existe el usuario no podrá llenarse el campo de `user_id`
 - Permite que los likes puedan ser desactivados para que el usuario pueda quitar el like
 - Permite tener el histórico de a qué propiedades se le ha dado más o menos like
@@ -79,3 +80,6 @@ Para instalar el proyecto, sigue estos pasos:
 
 # Pruebas Unitarias
 * Se realizaron pruebas unitarias para las funciones del codigo mas importantes estas prubas se dividieron en dos archivos [test_unit_api.py](test_unit_api.py) el cual contien las pruebas de los endpoint y otro llamado [test_unit.py](test_unit.py)
+
+# Json para enviar filtros
+* en el archivo [esquema_filtros_json](esquema_filtros_json.json) se encuentra un ejemplo de como pueden ir los filtros para las busquedas.
