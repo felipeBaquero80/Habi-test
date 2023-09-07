@@ -6,6 +6,12 @@ port = 8080
 
 
 def test_get():
+    """
+    Send a GET request to the specified host and port.
+
+    Returns:
+        tuple: A tuple containing the HTTP status code and the response data.
+    """
     conn = http.client.HTTPConnection(host, port)
     conn.request("GET", "/")
 
@@ -19,6 +25,15 @@ def test_get():
 
 
 def test_post(data):
+    """
+    Send a POST request with JSON data to the specified host and port.
+
+    Args:
+        data (dict): JSON data to be sent in the request body.
+
+    Returns:
+        tuple: A tuple containing the HTTP status code and the response data.
+    """
     conn = http.client.HTTPConnection(host, port)
     headers = {"Content-type": "application/json"}
     json_data = json.dumps(data)

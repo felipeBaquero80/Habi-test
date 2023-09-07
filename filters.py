@@ -3,6 +3,15 @@ import json
 
 
 def json_parser(tuple_search):
+    """
+    Convert a tuple of database search results into JSON format.
+
+    Args:
+        tuple_search (tuple): A tuple containing database search results.
+
+    Returns:
+        str: JSON representation of the search results.
+    """
     result_dict = [
         {"Direccion": row[0], 'Ciudad': row[1], 'Estado': row[2], 'Precio': row[3], 'Descripcion': row[4]} for row
         in tuple_search]
@@ -11,8 +20,23 @@ def json_parser(tuple_search):
 
 
 class Filter_manage:
+    """
+    A class for managing property filters and database queries.
+    """
 
     def consult_db(self, filter_city, filter_address, filter_year):
+
+        """
+        Execute a database query based on provided filters.
+
+        Args:
+            filter_city (str): The city filter.
+            filter_address (str): The address filter.
+            filter_year (str): The year filter.
+
+        Returns:
+            str: JSON representation of the query results.
+        """
 
         string_consulta = """SELECT p.address, p.city,
                                 s.name, p.price, p.description FROM status As s
