@@ -1,19 +1,19 @@
 from connect_db import connect_db
 import json
 
-class Filter_manage():
 
-    def json_parser(self, tuple_search):
+def json_parser(tuple_search):
+    result_dict = [
+        {"Direccion": row[0], 'Ciudad': row[1], 'Estado': row[2], 'Precio': row[3], 'Descripcion': row[4]} for row
+        in tuple_search]
+    result_json = json.dumps(result_dict)
+    return result_json
 
-        result_dict = [{"Direccion": row[0],'Ciudad':row[1],'Estado':row[2],'Precio':row[3],'Descripcion':row[4] } for row in tuple_search]
-        result_json = json.dumps(result_dict)
-        return result_json
 
+class Filter_manage:
 
     def consult_db(self, filter_city, filter_address, filter_year):
 
-
-        print(filter_city, filter_address, filter_year)
         string_consulta = """SELECT p.address, p.city,
                                 s.name, p.price, p.description FROM status As s
                                 INNER JOIN status_history AS sh ON s.id = sh.property_id
@@ -22,7 +22,7 @@ class Filter_manage():
                                 SELECT MAX(update_date)
                                 FROM status_history
                                 WHERE property_id = p.id)"""
-        
+
         conditions = []
 
         if filter_city:
@@ -38,10 +38,6 @@ class Filter_manage():
 
         string_consulta += "ORDER BY p.id, sh.update_date DESC;"
 
-        print(string_consulta)
-
-        
-
         # get conn and cursor from connect_db
         conn, cursor = connect_db()
 
@@ -49,11 +45,9 @@ class Filter_manage():
             cursor.execute(string_consulta)
             result = cursor.fetchall()
 
-            
-
-            return (self.json_parser(result))
-
+            print('Cerrando conexiones...')
             cursor.close()
             conn.close()
+            print('Conexion cerrada')
 
-
+            return json_parser(result)

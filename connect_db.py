@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 
+
 # configuration bd
 def connect_db():
     config = {
@@ -10,8 +11,6 @@ def connect_db():
         'password': os.environ.get('pass_test'),
         'database': os.environ.get('database_test')
     }
-    print('______________',os.environ.get('host_test'),'_________',os.environ.get('port_test'))
-
 
     try:
         conn = mysql.connector.connect(**config)

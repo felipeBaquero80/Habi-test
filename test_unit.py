@@ -1,5 +1,5 @@
 from connect_db import connect_db
-from filters import Filter_manage
+from filters import Filter_manage, json_parser
 import json
 
 
@@ -14,16 +14,17 @@ class TestFilterManage:
 
     def test_json_parser(self):
 
-        tuple_search = [('123 Main St', 'New York', 'NY', 100000, 'Lorem ipsum')]
-        expected_result = '[{"Direccion": "123 Main St", "Ciudad": "New York", "Estado": "NY", "Precio": 100000, "Descripcion": "Lorem ipsum"}]'
+        tuple_search = [
+            ('carrera 100 #15-90', 'medellin', 'vendido', 325000000, 'Amplio apartamento en conjunto cerrado')]
+        expected_result = '[{"Direccion": "carrera 100 #15-90", "Ciudad": "medellin", "Estado": "vendido", "Precio": 325000000, "Descripcion": "Amplio apartamento en conjunto cerrado"}]'
 
 
         filter_manager = Filter_manage()
 
 
-        result = filter_manager.json_parser(tuple_search)
+        result = json_parser(tuple_search)
 
-        assert result == expected_result
+        assert result == expected_result, "La consulta es exitosa"
 
     def test_consult_db(self):
 
@@ -47,11 +48,11 @@ class TestFilterManage:
 
 
 
-"""if __name__ == '__main__':
+if __name__ == '__main__':
     test_filter_manager = TestFilterManage()
     test_filter_manager.test_json_parser()
     test_filter_manager.test_consult_db()
-"""
+
 
 
 
