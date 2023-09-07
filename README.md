@@ -43,4 +43,4 @@ Para instalar el proyecto, sigue estos pasos:
    1. relaizar una serie de join para optimizar el consumo de la base de datos y a su vez hacer concatenación de strigns para realizar filtros dinámicos según los requerimientos del proyecto.
 
 ## Esquema like :+1:
-![Esquema](.\logos\diagrama_megustas.png)
+![Esquema](diagrama_megustas.png)
