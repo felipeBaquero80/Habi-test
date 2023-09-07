@@ -26,7 +26,10 @@ Para instalar el proyecto, sigue estos pasos:
 4. Activar el entorno virtual `venv_name\Scripts\activate`
 5. Instala las dependencias: `pip install -r requiriment.txt`
 6. Crea las variables de entorno en tu sistema: `host_test ,port_test ,user_test ,pass_test ,database_test`
-   1. las variables de entorno deben tener los datos de la cadena de conexion
+   1. las variables de entorno deben tener los datos de la cadena de conexion.
+7. Una vez tengas configurado las variables de entorno ejecuta el comando `python api_main.py`
+   1. lo que provocara que los servicios ya esten en tu **localhost** puerto **8080**
+   2. si deseas modificar el puerto se encuntra en el archivo [api_main.py](api_main.py) variable **port**
 
 
 ## Tecnologías
